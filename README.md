@@ -1,3 +1,3 @@
-# DataEngineering_Jenkins
+# Website
 
-This project is integrated with Jenkins !
+This is about the website part of the application
