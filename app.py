@@ -1,10 +1,10 @@
 from flask import Flask, request, render_template
-import pickle
 from nltk.tokenize import word_tokenize
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 from unidecode import unidecode
+import pandas as pd
 import re
 import nltk
 import string
@@ -48,9 +48,7 @@ def pre_process(corpus):
 def lemmatize(sentence):
     lemmatizer = WordNetLemmatizer()
     words = word_tokenize(sentence)
-
     out = " ".join([lemmatizer.lemmatize(w) for w in words])
-
     return out
 
 
@@ -59,7 +57,21 @@ def get_top_tweets(message):
     responce = ""
     emoji = ""
     message = lemmatize(pre_process(remove_noise(message)))
-    responce = ""#add model
+
+    i = 0
+    data = pd.DataFrame([], columns=['tweet_index', "similarity_score"])
+    while i < len(df['text_proced']):
+        a = {"tweet_index": i,
+             "similarity_score": model.wv.n_similarity(text.lower().split(), df['text_proced'][i].lower().split())}
+        data = data.append(a, ignore_index=True)
+        i = i + 1
+        top_20 = data.nlargest(20, ['similarity_score'])
+
+    print(" In order, this tweet is similar ")
+    for i in top_20['tweet_index']:
+        print("at " + "{:.0%}".format(top_20["similarity_score"][i]) + " to the tweet of " + df.loc[
+            i, "author"] + " posted the " + df.loc[i, "date"] + " And the text is " + df.loc[i, "text"])
+    responce =
 
     if responce is not '':
         status = "success"
