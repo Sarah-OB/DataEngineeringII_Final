@@ -86,7 +86,7 @@ model = Word2Vec(size=300, window=5,
 model.build_vocab(sentences)
 # assign the vectors to the vocabs that are in Google's pre-trained model and your sentences defined above.
 # lockf needs to be set to 1.0 to allow continued training.
-model.intersect_word2vec_format('GoogleNews-vectors-negative300.bin', lockf=1.0, binary=True)
+model.intersect_word2vec_format('GoogleNews-vectors-negative300.bin/GoogleNews-vectors-negative300.bin', lockf=1.0, binary=True)
 # continue training with you own data
 model.train(sentences, total_examples=3, epochs=5)
 
