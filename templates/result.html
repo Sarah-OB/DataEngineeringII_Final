@@ -5,30 +5,24 @@
 
   <meta charset="UTF-8">
 
-	<link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
-	<meta name="apple-mobile-web-app-title" content="CodePen">
-
-	<link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
-
-	<link rel="mask-icon" type="" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111" />
-
+	<meta name="apple-mobile-web-app-title" content="Tweets">
 
   	<title>Trump similar tweets results</title>
   	<link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates:300,400,500,600" rel="stylesheet">
 
   	<link rel='stylesheet' href='https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css'>
 	<link rel="stylesheet" type="text/css" href="../static/css/main.css">
-  <link rel="stylesheet" type="text/css" href="../static/css/main_result.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/main_result.css">
 
-  <script>
-  		window.console = window.console || function(t) {};
-  </script>
+    <script>
+        window.console = window.console || function(t) {};
+    </script>
 
-  <script>
+    <script>
 	  if (document.location.search.match(/type=embed/gi)) {
 		window.parent.postMessage("resize", "*");
 	  }
-  </script>
+    </script>
 
 </head>
 
@@ -37,13 +31,13 @@
       <div class="container">
           <h1>Trump similar tweets</h1>
           <h2>Results of the analyzer !</h2>
+            <h2> Input string : {{ message }}</h2>
 
           <ol class="gradient-list">
             {% for item in analysis_responce %}
-                <li> {{ item }} </li>
+                <li style="color: #1d1f20"> {{ item }} </li>
             {% endfor %}
           </ol>
-
       </div>
     </main>
 
