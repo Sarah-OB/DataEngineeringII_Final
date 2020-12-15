@@ -90,6 +90,8 @@ model.intersect_word2vec_format('GoogleNews-vectors-negative300.bin/GoogleNews-v
 # continue training with you own data
 model.train(sentences, total_examples=3, epochs=5)
 
+df.to_csv('tweets_processed.csv')
+
 # Top 20 tweets
 
 text = " time for a Royal Celebration!"
