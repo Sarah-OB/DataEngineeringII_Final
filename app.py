@@ -9,6 +9,7 @@ import pickle
 import re
 import nltk
 import string
+from prometheus_client import start_http_server
 
 nltk.download('punkt')
 nltk.download('wordnet')
@@ -104,6 +105,8 @@ def predict():
     else:
         return render_template("index.html")
 
+
 if __name__ == '__main__':
+    start_http_server(8010)
     app.debug = True
     app.run(host='0.0.0.0')
