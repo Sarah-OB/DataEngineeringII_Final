@@ -1,3 +1,3 @@
-# DataEngineering_Jenkins
+# Release
 
-This project is integrated with Jenkins !
+This is the release branch that is the previous stage before going live
