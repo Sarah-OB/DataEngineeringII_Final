@@ -17,14 +17,6 @@ pipeline {
             }
         }
 
-        stage('Install libraries') {
-            steps {
-                script {
-                    //groovyfile.requirements_app()
-                }
-            }
-        }
-
         stage('Testing') {
             steps {
                 script {
