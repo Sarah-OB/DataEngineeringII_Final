@@ -14,6 +14,7 @@ from prometheus_client import start_http_server
 from prometheus_client import Counter
 from prometheus_client import Gauge
 from prometheus_client import Summary
+from prometheus_client import Histogram
 
 REQUESTS = Counter('app_requests', 'How many times the application has been accessed')
 SEARCH = Counter('app_search', 'How many search have been made')
@@ -22,6 +23,7 @@ INPROGRESS = Gauge('app_progress', 'In progress requests')
 LAST = Gauge('app_last', 'Last application access')
 
 LATENCY = Summary('app_latency', 'Time needed for a request')
+LATENCY_HIS = Histogram('appl_hist_latency', 'Time needed for a request')
 
 nltk.download('punkt')
 nltk.download('wordnet')
@@ -112,6 +114,7 @@ def predict():
             if status is 'success':
                 SEARCH.inc()
                 LATENCY.observe(time.time() - start)
+                LATENCY_HIS.observe(time.time() - start)
                 return render_template('result.html',
                                        analysis_responce=prediction, message=text['message_user'])
             else:
