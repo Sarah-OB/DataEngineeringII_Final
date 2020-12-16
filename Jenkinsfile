@@ -19,6 +19,18 @@ pipeline {
             }
         }
     }
+	  
+  parallel {
+      stage('Build Flask Docker Image'){
+	sh 'docker build -t myflaskapp .' 
+      }
+      stage('Run Docker Image') {
+	steps {
+	  echo 'Running Flask app'
+	  sh 'docker run -p 5000:5000 -d --name  myflaskapp  myflaskapp'
+	}
+      }
+  }
 
     stage('Testing') {
         steps {
