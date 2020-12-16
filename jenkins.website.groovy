@@ -1,5 +1,6 @@
 def test_app(){
-  sh 'python -m unittest test_app_nodocker.py'
+    sh 'pip install flask nltk gensim unidecode pandas'
+    sh 'python -m unittest test_app_nodocker.py'
 }
 
 
