@@ -1,5 +1,5 @@
 def build_app(){
-  sh 'docker-compose up -d'
+  sh 'docker-compose up'
 }
 
 def test_app(){
