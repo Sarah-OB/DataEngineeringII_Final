@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+
+  <meta charset="UTF-8">
+
+	<meta name="apple-mobile-web-app-title" content="Tweets">
+
+  	<title>Trump similar tweets results</title>
+  	<link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates:300,400,500,600" rel="stylesheet">
+
+  	<link rel='stylesheet' href='https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css'>
+	<link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/main_result.css">
+
+    <script>
+        window.console = window.console || function(t) {};
+    </script>
+
+    <script>
+	  if (document.location.search.match(/type=embed/gi)) {
+		window.parent.postMessage("resize", "*");
+	  }
+    </script>
+
+</head>
+
+  <body translate="no" >
+    <main>
+      <div class="container">
+          <h1>Trump similar tweets</h1>
+          <h2>Results of the analyzer !</h2>
+            <h2> Input string : {{ message }}</h2>
+
+          <ol class="gradient-list">
+            {% for item in analysis_responce %}
+                <li style="color: #1d1f20"> {{ item }} </li>
+            {% endfor %}
+          </ol>
+      </div>
+    </main>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+
+  </body>
+</html>
+
