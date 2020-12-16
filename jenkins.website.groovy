@@ -1,6 +1,5 @@
 def test_app(){
-  //sh 'python test_app.py '
-  sh 'virtualenv venv && . venv/bin/activate && pip install requests && python test_app.py'
+  sh 'python -m unittest test_app_nodocker.py'
 }
 
 
