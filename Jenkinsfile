@@ -20,9 +20,9 @@ pipeline {
         stage('Testing') {
             steps {
                 script {
-                    withPythonEnv('python'){
+                    //withPythonEnv('python'){
                         groovyfile.test_app()
-                    }
+                    //}
                 }
             }
         }
