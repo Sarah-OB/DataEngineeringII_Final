@@ -93,6 +93,7 @@ def get_top_tweets(message):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    LAST.set(time.time())
     return render_template('index.html')
 
 
@@ -100,8 +101,8 @@ def index():
 def predict():
     status = 'fail'
     prediction = ''
-    LAST.set(time.time())
     REQUESTS.inc()
+    SEARCH.inc()
 
     if request.method == 'POST':
         text = request.form
@@ -112,7 +113,6 @@ def predict():
             status, prediction = get_top_tweets(text['message_user'])
 
             if status is 'success':
-                SEARCH.inc()
                 LATENCY.observe(time.time() - start)
                 LATENCY_HIS.observe(time.time() - start)
                 return render_template('result.html',
