@@ -4,7 +4,7 @@ def test_app(){
 
 
 def develop_app(){
-  echo 'branch into develop'
+  echo 'Branch into develop'
 }
 
 return this
