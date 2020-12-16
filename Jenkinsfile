@@ -3,7 +3,7 @@ def groovyfile
 pipeline {
     agent {
         docker {
-            image 'python:latest'
+            image 'python:3.6'
         }
     }
 
@@ -20,7 +20,7 @@ pipeline {
         stage('Install libraries') {
             steps {
                 script {
-                    groovyfile.requirements_app()
+                    //groovyfile.requirements_app()
                 }
             }
         }
