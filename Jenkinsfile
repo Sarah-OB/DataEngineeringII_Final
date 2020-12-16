@@ -1,7 +1,11 @@
 def groovyfile
 
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.7.2'
+        }
+    }
 
     stages {
         stage('Build script') {
@@ -9,6 +13,14 @@ pipeline {
                 script {
                     def filename = 'jenkins.' + env.BRANCH_NAME + '.groovy'
                     groovyfile = load filename
+                }
+            }
+        }
+
+        stage('Install libraries') {
+            steps {
+                script {
+                    groovyfile.requirements_app()
                 }
             }
         }

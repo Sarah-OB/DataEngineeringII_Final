@@ -1,11 +1,15 @@
+#!/usr/bin/python
 import unittest
 import os
 import requests
+import app
 
 
 class FlaskTests(unittest.TestCase):
     def setUp(self):
         os.environ['NO_PROXY'] = '0.0.0.0'
+        app.app.testing = True
+        self.app = app.app.test_client()
         pass
 
     def tearDown(self):
