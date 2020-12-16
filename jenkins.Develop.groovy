@@ -3,7 +3,7 @@ def build_app(){
 }
 
 def test_app(){
-  sh 'python -m unittest test_app.py'
+  sh 'python test_app.py'
 }
 
 def stress_test_app() {
