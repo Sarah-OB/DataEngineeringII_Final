@@ -1,5 +1,5 @@
 def test_app(){
-  sh 'python -m unittest test_app.py '
+  sh 'python3 test_app.py '
 }
 
 
