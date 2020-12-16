@@ -1,7 +1,7 @@
 def build_app(){
-  //sh 'docker-compose up -d'
-  sh 'docker build -t myflaskapp .'
-  sh 'docker run -p 5000:5000 -d --name  myflaskapp  myflaskapp'
+  sh 'docker-compose up -d'
+  //sh 'docker build -t myflaskapp .'
+  //sh 'docker run -p 5000:5000 -d --name  myflaskapp  myflaskapp'
 }
 
 def test_app(){
