@@ -20,7 +20,7 @@ pipeline {
         }
     }
 	  
-  parallel {
+  
       stage('Build Flask Docker Image'){
 	sh 'docker build -t myflaskapp .' 
       }
@@ -30,7 +30,7 @@ pipeline {
 	  sh 'docker run -p 5000:5000 -d --name  myflaskapp  myflaskapp'
 	}
       }
-  }
+  
 
     stage('Testing') {
         steps {
