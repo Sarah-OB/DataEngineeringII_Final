@@ -9,7 +9,7 @@ def test_app(){
 }
 
 def stress_test_app() {
-    //echo 'http:127.0.0.1:5000/?{1..1000} | xags -n 1 -P 1000 curl -s'
+    sh 'echo http:127.0.0.1:5000/?{1..1000} | xargs -n 1 -P 1000 curl -s'
     echo 'Stress test'
 }
 
