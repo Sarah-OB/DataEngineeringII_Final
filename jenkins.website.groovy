@@ -1,9 +1,11 @@
 def test_app(){
     //sh 'pip install flask nltk gensim unidecode pandas'
-    //sh 'python -m unittest test_app_nodocker.py'
-    sh 'virtualenv venv && . venv/bin/activate && pip install flask nltk gensim unidecode pandas && python -m unittest test_app_nodocker.py'
+    sh 'python test_app.py'
 }
 
+def down_image(){
+    sh 'docker rm -f python'
+}
 
 def develop_app(){
   echo 'Branch into develop'
