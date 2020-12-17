@@ -1,6 +1,6 @@
 def test_app(){
     //sh 'pip install flask nltk gensim unidecode pandas'
-    sh 'python test_app_norequests.py'
+    sh 'python test_app.py'
 }
 
 def down_image(){
