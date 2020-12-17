@@ -1,11 +1,7 @@
 def groovyfile
 
 pipeline {
-    agent {
-        docker {
-            image 'python:3.6'
-        }
-    }
+    agent any
 
     stages {
         stage('Build script') {
@@ -17,12 +13,26 @@ pipeline {
             }
         }
 
+        stage('Build python app') {
+            steps {
+                sh 'docker run -d -p 5000:5000 --name python:latest'
+            }
+        }
+
         stage('Testing') {
             steps {
                 script {
-                    //withPythonEnv('python'){
+                    withPythonEnv("HOME=${env.WORKSPACE}"){
                         groovyfile.test_app()
-                    //}
+                    }
+                }
+            }
+        }
+
+        stage('Down image'){
+            steps {
+                script {
+                    groovyfile.down_image()
                 }
             }
         }
