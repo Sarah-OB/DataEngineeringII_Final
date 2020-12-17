@@ -23,7 +23,8 @@ INPROGRESS = Gauge('app_progress', 'In progress requests')
 LAST = Gauge('app_last', 'Last application access')
 
 LATENCY = Summary('app_latency', 'Time needed for a request')
-LATENCY_HIS = Histogram('app_hist_latency', 'Time needed for a request', buckets=[0.0001, 0.001, 0.01, 0.1, 1.0, 1.5, 2.0, 3.0])
+LATENCY_HIS = Histogram('app_hist_latency', 'Time needed for a request',
+                        buckets=[0.0001, 0.001, 0.01, 0.1, 1.0, 1.5, 2.0, 3.0, 60.0])
 
 nltk.download('punkt')
 nltk.download('wordnet')
@@ -32,7 +33,7 @@ nltk.download('stopwords')
 
 app = Flask(__name__)
 
-model = pickle.load(open('model.pkl','rb'))
+model = pickle.load(open('model.pkl', 'rb'))
 
 
 def remove_noise(a):
@@ -62,12 +63,13 @@ def lemmatize(sentence):
     return out
 
 
-def get_similar(tweets,message):
+def get_similar(tweets, message):
     i = 0
     data = pd.DataFrame([], columns=['tweet_index', "similarity_score"])
     while i < len(tweets['text_proced']):
         a = {"tweet_index": i,
-             "similarity_score": model.wv.n_similarity(message.lower().split(), tweets['text_proced'][i].lower().split())}
+             "similarity_score": model.wv.n_similarity(message.lower().split(),
+                                                       tweets['text_proced'][i].lower().split())}
         data = data.append(a, ignore_index=True)
         i = i + 1
         top_20 = data.nlargest(20, ['similarity_score'])
@@ -93,8 +95,10 @@ def get_top_tweets(message):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    start = time.time()
     REQUESTS.inc()
     LAST.set(time.time())
+    LATENCY_HIS.observe(time.time() - start)
     return render_template('index.html')
 
 
@@ -103,11 +107,11 @@ def predict():
     status = 'fail'
     prediction = ''
     SEARCH.inc()
+    start = time.time()
 
     if request.method == 'POST':
         text = request.form
 
-        start = time.time()
         if text['message_user'] is not '':
             INPROGRESS.inc()
             status, prediction = get_top_tweets(text['message_user'])
@@ -118,16 +122,19 @@ def predict():
                 return render_template('result.html',
                                        analysis_responce=prediction, message=text['message_user'])
             else:
+                LATENCY_HIS.observe(time.time() - start)
                 return render_template('index.html', error="We didn't succeed to analyze your text, please try again.")
 
         else:
+            LATENCY_HIS.observe(time.time() - start)
             return render_template('index.html', error="We can't analyze empty text.")
 
     else:
+        LATENCY_HIS.observe(time.time() - start)
         return render_template("index.html")
 
 
 if __name__ == '__main__':
     start_http_server(8010)
-    app.debug = True
+    # app.debug = True
     app.run(host='0.0.0.0')
