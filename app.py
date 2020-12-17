@@ -23,7 +23,7 @@ INPROGRESS = Gauge('app_progress', 'In progress requests')
 LAST = Gauge('app_last', 'Last application access')
 
 LATENCY = Summary('app_latency', 'Time needed for a request')
-LATENCY_HIS = Histogram('appl_hist_latency', 'Time needed for a request')
+LATENCY_HIS = Histogram('app_hist_latency', 'Time needed for a request', buckets=[0.0001, 0.001, 0.01, 0.1, 1.0, 1.5, 2.0, 3.0])
 
 nltk.download('punkt')
 nltk.download('wordnet')
@@ -93,6 +93,8 @@ def get_top_tweets(message):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    REQUESTS.inc()
+    LAST.set(time.time())
     return render_template('index.html')
 
 
@@ -100,8 +102,7 @@ def index():
 def predict():
     status = 'fail'
     prediction = ''
-    LAST.set(time.time())
-    REQUESTS.inc()
+    SEARCH.inc()
 
     if request.method == 'POST':
         text = request.form
@@ -112,7 +113,6 @@ def predict():
             status, prediction = get_top_tweets(text['message_user'])
 
             if status is 'success':
-                SEARCH.inc()
                 LATENCY.observe(time.time() - start)
                 LATENCY_HIS.observe(time.time() - start)
                 return render_template('result.html',
