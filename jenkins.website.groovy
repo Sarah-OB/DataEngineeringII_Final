@@ -1,5 +1,5 @@
 def test_app(){
-    sh 'pip install flask nltk gensim unidecode pandas'
+    //sh 'pip install flask nltk gensim unidecode pandas'
     sh 'python test_app_norequests.py'
 }
 
