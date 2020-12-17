@@ -22,9 +22,8 @@ pipeline {
         stage('Testing') {
             steps {
                 script {
-                    withPythonEnv("HOME=${env.WORKSPACE}"){
-                        groovyfile.test_app()
-                    }
+                    groovyfile.test_app()
+
                 }
             }
         }
